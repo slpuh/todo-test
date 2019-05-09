@@ -10,6 +10,7 @@
     <!-- Place favicon.ico in the root directory -->
 
     <link rel="stylesheet" href="/css/main.css">
+
 </head>
 
 <body>
@@ -20,22 +21,32 @@
                     <a href="/" class="logo">To.<span>Do</span></a>
                 </div>
                 <div class="header-nav">
-                    <ul class="nav-list">
+                    <ul class="nav-list">                        
+                        <?php if (!isset($_SESSION["user"])): ?>
                         <li class="nav-item">
-                            <a href="/user/login">Login</a>
+                            <a href="/user/login">Sign In</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/user/register">Registration</a>
+                            <a href="/user/register">Sign Up</a>
                         </li>
-                    </ul>                    
+                        <?php else: ?>
+                        <li class="nav-item">
+                            <a href="cabinet">Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/user/logout">Logout</a>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
                 </div>
             </div>
         </header>
-                
-            <?php include  __DIR__ . '/../' . $content; ?>        
-       
+
+        <?php include  __DIR__ . '/../' . $content; ?>
+
     </div>
     <script src="js/main.js"></script>
     <script src="js/jquery.formstyler.min.js"></script>
 </body>
+
 </html>

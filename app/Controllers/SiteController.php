@@ -3,6 +3,7 @@
 //namespace SendPulseTest\Controllers;
 
 use SendPulseTest\Controllers\BaseController;
+use SendPulseTest\Models\User;
 
 class SiteController extends BaseController
 {

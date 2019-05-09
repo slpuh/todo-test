@@ -8,7 +8,7 @@ class Router
 
     public function __construct()
     {
-        $routesPath = __DIR__ . '/../../config/routes.php';
+        $routesPath  = __DIR__ . '/../../config/routes.php';
         $this->routes = include($routesPath);
     }
 
@@ -39,7 +39,7 @@ class Router
                 $parameters = $segments;
                 
                 $controllerFile = __DIR__ . '/../Controllers/' .
-                    $controllerName . '.php';
+                    $controllerName . '.php';                    
 
                 if (file_exists($controllerFile)) {
                     include_once($controllerFile);

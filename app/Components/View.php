@@ -4,8 +4,15 @@ namespace SendPulseTest\Components;
 
 class View
 {
-    public function render($content, $template, $data = null)    {
+    
+    public function render($content, $template, $data = null)    
+    {
         
         include  __DIR__ . '/../../views/' . $template;
+    }
+    public function a()    
+    {
+        
+        echo '111';
     }
 }

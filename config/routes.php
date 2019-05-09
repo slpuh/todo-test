@@ -9,6 +9,7 @@ return [
     'user/register' => 'user/register',
     'user/login' => 'user/login',
     'user/logout' => 'user/logout',
-    'user' => 'user/login'   
+    'user' => 'user/login',
+    'cabinet' => 'cabinet/index',   
 
 ];

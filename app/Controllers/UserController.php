@@ -3,6 +3,7 @@
 //namespace SendPulseTest\Controllers;
 
 use SendPulseTest\Controllers\BaseController;
+use SendPulseTest\Models\User;
 
 class UserController extends BaseController
 {
@@ -13,80 +14,74 @@ class UserController extends BaseController
         $email = '';
         $password = '';
         $result = false;
-        
-        if (isset($_POST['submit'])) {
+
+        if ($_POST) {
             $name = $_POST['name'];
             $email = $_POST['email'];
             $password = $_POST['password'];
-            
+
             $errors = false;
-            
+
             if (!User::checkName($name)) {
                 $errors[] = 'Имя не должно быть короче 2-х символов';
             }
-            
+
             if (!User::checkEmail($email)) {
                 $errors[] = 'Неправильный email';
             }
-            
+
             if (!User::checkPassword($password)) {
                 $errors[] = 'Пароль не должен быть короче 6-ти символов';
+            } else {
+                $password = password_hash($password, PASSWORD_DEFAULT);
             }
-            
-            if (User::checkEmailExists($email)) {
-                $errors[] = 'Такой email уже используется';
+
+            if (User::checkEmailExists($email) || User::checkNameExists($name)) {
+                $errors[] = 'Такой email или имя уже используются';
             }
-            
+
             if ($errors == false) {
                 $result = User::register($name, $email, $password);
+                return $this->view->render('cabinet/index.php', 'layouts/template.php');
             }
-
         }
 
-        return $this->view->render('user/register.php', 'layouts/template.php');      
+        return $this->view->render('user/register.php', 'layouts/template.php');
     }
 
     public function login()
     {
+
         $email = '';
         $password = '';
-        
-        if (isset($_POST['submit'])) {
+
+        if ($_POST) {
             $email = $_POST['email'];
             $password = $_POST['password'];
-            
             $errors = false;
-                        
-            // Валидация полей
+
             if (!User::checkEmail($email)) {
                 $errors[] = 'Неправильный email';
-            }            
+            }
             if (!User::checkPassword($password)) {
                 $errors[] = 'Пароль не должен быть короче 6-ти символов';
             }
-            
-            // Проверяем существует ли пользователь
+
             $userId = User::checkUserData($email, $password);
-            
+
             if ($userId == false) {
-                // Если данные неправильные - показываем ошибку
                 $errors[] = 'Неправильные данные для входа на сайт';
             } else {
-                // Если данные правильные, запоминаем пользователя (сессия)
+
                 User::auth($userId);
                 
-                // Перенаправляем пользователя в закрытую часть - кабинет 
-                header("Location: /cabinet/"); 
+                header("Location: /cabinet");                
             }
-
         }
-        return $this->view->render('user/login.php', 'layouts/template.php');         
+        return $this->view->render('user/login.php', 'layouts/template.php');
     }
-    
-    /**
-     * Удаляем данные о пользователе из сессии
-     */
-    public function actionLogout()
+
+    public function logout()
     {
         unset($_SESSION["user"]);
         header("Location: /");

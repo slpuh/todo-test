@@ -2,7 +2,7 @@
 
 namespace SendPulseTest\Models;
 
-use SendPulseTest\Models;
+use SendPulseTest\Components\Db;
 
 class User
 {
@@ -12,51 +12,64 @@ class User
 
         $db = Db::getConnection();
 
-        $sql = 'INSERT INTO user (name, email, password) '
-                . 'VALUES (:name, :email, :password)';
+        $sql = 'INSERT INTO users (name, email, password) '
+            . 'VALUES (:name, :email, :password)';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':name', $name, PDO::PARAM_STR);
-        $result->bindParam(':email', $email, PDO::PARAM_STR);
-        $result->bindParam(':password', $password, PDO::PARAM_STR);
+        $result->bindParam(':name', $name, \PDO::PARAM_STR);
+        $result->bindParam(':email', $email, \PDO::PARAM_STR);
+        $result->bindParam(':password', $password, \PDO::PARAM_STR);
 
         return $result->execute();
     }
-
-    /**
-     * Редактирование данных пользователя
-     * @param string $name
-     * @param string $password
-     */
+    
     public static function edit($id, $name, $password)
     {
         $db = Db::getConnection();
         $sql = "UPDATE user 
             SET name = :name, password = :password 
             WHERE id = :id";
-        
-        $result = $db->prepare($sql);                                  
-        $result->bindParam(':id', $id, PDO::PARAM_INT);       
-        $result->bindParam(':name', $name, PDO::PARAM_STR);    
-        $result->bindParam(':password', $password, PDO::PARAM_STR); 
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, \PDO::PARAM_INT);
+        $result->bindParam(':name', $name, \PDO::PARAM_STR);
+        $result->bindParam(':password', $password, \PDO::PARAM_STR);
         return $result->execute();
     }
+    public static function validatePassword($email)
+    {
+        $db = Db::getConnection();
 
-    /**
-     * Проверяем существует ли пользователь с заданными $email и $password
-     * @param string $email
-     * @param string $password
-     * @return mixed : ingeger user id or false
-     */
+        $result = $db->query('SELECT email, password FROM users');
+
+        $rowsArray = $result->fetchAll();
+
+        foreach ($rowsArray as $item) {
+            if ($email == $item['email']) {
+                $hash = $item['password'];
+            }
+        }
+        if (isset($hash)) {
+            return $hash;
+        } else {
+            return false;
+        }
+    }
+   
     public static function checkUserData($email, $password)
     {
         $db = Db::getConnection();
 
-        $sql = 'SELECT * FROM user WHERE email = :email AND password = :password';
+        $sql = 'SELECT * FROM users WHERE email = :email';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':email', $email, PDO::PARAM_INT);
-        $result->bindParam(':password', $password, PDO::PARAM_INT);
+
+        $hash = self::validatePassword($email);
+
+        $password = password_verify($password, $hash);
+        
+        $result->bindParam(':email', $email, \PDO::PARAM_STR);
+
         $result->execute();
 
         $user = $result->fetch();
@@ -67,19 +80,13 @@ class User
         return false;
     }
 
-    /**
-     * Запоминаем пользователя
-     * @param string $email
-     * @param string $password
-     */
     public static function auth($userId)
     {
         $_SESSION['user'] = $userId;
     }
 
-    public static function checkLogged()
-    {
-        // Если сессия есть, вернем идентификатор пользователя
+    public static function checkLogged()    {
+        
         if (isset($_SESSION['user'])) {
             return $_SESSION['user'];
         }
@@ -95,9 +102,6 @@ class User
         return true;
     }
 
-    /**
-     * Проверяет имя: не меньше, чем 2 символа
-     */
     public static function checkName($name)
     {
         if (strlen($name) >= 2) {
@@ -105,10 +109,7 @@ class User
         }
         return false;
     }
-
-    /**
-     * Проверяет имя: не меньше, чем 6 символов
-     */
+    
     public static function checkPassword($password)
     {
         if (strlen($password) >= 6) {
@@ -116,10 +117,7 @@ class User
         }
         return false;
     }
-
-    /**
-     * Проверяет email
-     */
+   
     public static function checkEmail($email)
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -133,10 +131,10 @@ class User
 
         $db = Db::getConnection();
 
-        $sql = 'SELECT COUNT(*) FROM user WHERE email = :email';
+        $sql = 'SELECT COUNT(*) FROM users WHERE email = :email';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':email', $email, PDO::PARAM_STR);
+        $result->bindParam(':email', $email, \PDO::PARAM_STR);
         $result->execute();
 
         if ($result->fetchColumn())
@@ -144,26 +142,36 @@ class User
         return false;
     }
 
-    /**
-     * Returns user by id
-     * @param integer $id
-     */
+    public static function checkNameExists($name)
+    {
+
+        $db = Db::getConnection();
+
+        $sql = 'SELECT COUNT(*) FROM users WHERE name = :name';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':name', $name, \PDO::PARAM_STR);
+        $result->execute();
+
+        if ($result->fetchColumn())
+            return true;
+        return false;
+    }
+    
     public static function getUserById($id)
     {
         if ($id) {
             $db = Db::getConnection();
-            $sql = 'SELECT * FROM user WHERE id = :id';
+
+            $sql = 'SELECT * FROM users WHERE id = :id';
 
             $result = $db->prepare($sql);
-            $result->bindParam(':id', $id, PDO::PARAM_INT);
-
-            // Указываем, что хотим получить данные в виде массива
-            $result->setFetchMode(PDO::FETCH_ASSOC);
+            $result->bindParam(':id', $id, \PDO::PARAM_INT);
+            
+            $result->setFetchMode(\PDO::FETCH_ASSOC);
             $result->execute();
-
 
             return $result->fetch();
         }
     }
-
 }

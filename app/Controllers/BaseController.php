@@ -6,7 +6,8 @@ use SendPulseTest\Components\View;
 
 class BaseController
 {
-    public $view;
+	public $view;
+	public $model;
 	
 	function __construct()
 	{

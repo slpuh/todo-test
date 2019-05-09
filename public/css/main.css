@@ -364,7 +364,7 @@ audio,canvas,iframe,img,svg,video
 .btn.btn-yellow
 {
 	background: #f8e71c;
-	color: #4a4a4a;
+	color: #0d1830;
 }
 .btn.btn-yellow:hover
 {
@@ -1124,7 +1124,7 @@ audio,canvas,iframe,img,svg,video
 }
 .block-view,.wrapper
 {
-	overflow: hidden;
+	overflow: hidden;	
 }
 .header,.wrapper
 {
@@ -1196,7 +1196,7 @@ audio,canvas,iframe,img,svg,video
 }
 body,html
 {
-	background: #f4f7fb;
+	background: #0d1830;
 	color: #1a2634;
 	font-family: Roboto,sans-serif;
 	font-size: 14px;
@@ -1217,7 +1217,7 @@ body,html
 	display: block;
 }
 .wrapper
-{
+{	
 	min-height: 100%;
 	padding-bottom: 48px;
 }
@@ -1226,7 +1226,10 @@ body,html
 	background-color: #0d1830;
 	height: 58px;
 	line-height: 58px;
-	margin-bottom: 0;
+    margin-bottom: 0;
+    -webkit-box-shadow: -1px 10px 10px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: -1px 10px 10px 0px rgba(0,0,0,0.3);
+    box-shadow: -1px 10px 10px 0px rgba(0,0,0,0.3);
 }
 @media screen and (max-width:767px)
 {
@@ -1555,11 +1558,11 @@ body,html
 {
 	float: left;
 	min-height: 1px;
-	padding: 0 16px;
+	padding: 0 16px;	
 }
 .row
 {
-	margin: 0 -16px;
+	margin: 0 -16px;		
 }
 .col-3
 {
@@ -1604,6 +1607,7 @@ body,html
 .block-view .row
 {
 	margin-bottom: -32px;
+	
 }
 .block-item
 {
@@ -1651,7 +1655,7 @@ body,html
 }
 .login-wrapper
 {
-	background: #f4f7fb;
+	background: #0d1830;
 	color: #0d1830;
 	display: table;
 	min-height: 100%;
@@ -1669,7 +1673,7 @@ body,html
 	margin-top: 0;
 	padding: 0;
 	text-align: center;
-	vertical-align: middle;
+	vertical-align: middle;	
 }
 .login-wrapper .auth-logo
 {
@@ -1677,7 +1681,7 @@ body,html
 }
 .login-wrapper .auth-logo .logo
 {
-	color: #0d1830;
+	color: #fff;
 	font-size: 24px;
 	font-weight: 700;
 	text-decoration: none;
@@ -1699,7 +1703,7 @@ body,html
 {
 	background: 0 0;
 	border: none;
-	border-bottom: 2px solid #0d1830;
+	border-bottom: 2px solid #f8e71c;
 	border-radius: 0;
 	color: #fff;
 	height: 58px;
@@ -1712,7 +1716,7 @@ body,html
 }
 .login-wrapper .input:focus
 {
-	border-bottom: 2px solid #f8e71c;
+	border-bottom: 2px solid #fff;
 }
 .login-wrapper .button-wrapp
 {
@@ -1728,4 +1732,8 @@ body,html
 .btn.btn-blue {
     background: #0d1830;
     color: #f8e71c;
+}
+.row-flex {
+    display: flex;
+    flex-flow: row wrap;
 }

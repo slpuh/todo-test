@@ -1,8 +1,19 @@
 <div class="login-wrapper">
     <div class="main">
+        <div class="message">
+            <?php if (!empty($result)) : ?>
+                <p>Вы зарегистрированы!</p>
+            <?php endif; ?>
+            <?php if (isset($errors) && is_array($errors)) : ?>
+                <?php foreach ($errors as $error) : ?>
+                    <p><?php echo $error; ?></p>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
         <div class="content">
+
             <div class="auth-logo">
-                <a href="" class="logo">Sign <span>Up</span></a>
+                <div class="logo">Sign <span>Up</span></div>
             </div>
             <div class="auth-section">
                 <form action="" method="post">
@@ -15,7 +26,7 @@
                         </div>
                         <div class="input-item">
                             <input type="password" class="input" placeholder="Password" name="password">
-                        </div>                        
+                        </div>
                     </div>
                     <div class="button-wrapp">
                         <input type="submit" name="submit" class="btn btn-yellow" value="Sign Up">

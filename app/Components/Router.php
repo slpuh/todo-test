@@ -30,29 +30,30 @@ class Router
                 
                 $internalRoute = preg_replace("~$uriPattern~", $path, $uri);                
                 
-                $segments = explode('/', $internalRoute);
+                $segments = explode('/', $internalRoute);               
                 
+                $route = $segments;
+
                 $controllerName = ucfirst(array_shift($segments)) . 'Controller';                
                 
-                $actionName = array_shift($segments);
+                $action = array_shift($segments);               
                 
-                $parameters = $segments;
-                
-                $controllerFile = __DIR__ . '/../Controllers/' .
+                $controllerFile = APP.'/Controllers/' .
                     $controllerName . '.php';                    
 
                 if (file_exists($controllerFile)) {
                     include_once($controllerFile);
                 }
                 
-                $controllerObject = new $controllerName;
+                $controllerObj = new $controllerName($route);
 
-                $result = call_user_func_array([$controllerObject, $actionName], $parameters);
-                     
-                if ($result != null) {
-                    break;
-                }
-            }
+                if (method_exists($controllerObj, $action))
+		        {			
+                    $controllerObj->$action();
+                    $controllerObj->getView();
+		        }  
+                               
+            } 
         }
-    }
+    }    
 }

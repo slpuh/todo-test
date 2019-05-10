@@ -10,6 +10,10 @@ return [
     'user/login' => 'user/login',
     'user/logout' => 'user/logout',
     'user' => 'user/login',
-    'cabinet' => 'cabinet/index',   
+    'cabinet' => 'cabinet/index',
+
+    //Задачи
+    'cabinet/addtask' => 'cabinet/addtask',
+    'cabinet/edittask' => 'cabinet/edittask',    
 
 ];

@@ -1,7 +1,5 @@
 <?php
 
-//namespace SendPulseTest\Controllers;
-
 use SendPulseTest\Controllers\BaseController;
 use SendPulseTest\Models\User;
 
@@ -20,7 +18,7 @@ class UserController extends BaseController
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-            $errors = false;
+            $errors = [];
 
             if (!User::checkName($name)) {
                 $errors[] = 'Имя не должно быть короче 2-х символов';
@@ -41,24 +39,24 @@ class UserController extends BaseController
             }
 
             if ($errors == false) {
-                $result = User::register($name, $email, $password);
-                return $this->view->render('cabinet/index.php', 'layouts/template.php');
+                $result = User::register($name, $email, $password); 
+                               
             }
+            $this->set(['result' => $result, 'errors' => $errors]);            
         }
-
-        return $this->view->render('user/register.php', 'layouts/template.php');
+           
+         
     }
 
     public function login()
     {
-
         $email = '';
         $password = '';
 
         if ($_POST) {
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $errors = false;
+            $errors = [];
 
             if (!User::checkEmail($email)) {
                 $errors[] = 'Неправильный email';
@@ -74,11 +72,13 @@ class UserController extends BaseController
             } else {
 
                 User::auth($userId);
-                
-                header("Location: /cabinet");                
+
+                header("Location: /cabinet");
+            }
+            if ($errors) {
+                $this->set(['errors' => $errors]);  
             }
         }
-        return $this->view->render('user/login.php', 'layouts/template.php');
     }
 
     public function logout()

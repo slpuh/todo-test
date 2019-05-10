@@ -10,7 +10,10 @@
     <!-- Place favicon.ico in the root directory -->
 
     <link rel="stylesheet" href="/css/main.css">
-
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/gijgo.min.js" type="text/javascript"></script> 
+    <link href="/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    
 </head>
 
 <body>
@@ -31,7 +34,7 @@
                         </li>
                         <?php else: ?>
                         <li class="nav-item">
-                            <a href="cabinet">Account</a>
+                            <a href="/cabinet">Account</a>
                         </li>
                         <li class="nav-item">
                             <a href="/user/logout">Logout</a>
@@ -42,11 +45,13 @@
             </div>
         </header>
 
-        <?php include  __DIR__ . '/../' . $content; ?>
+        <?= $content ?>
 
     </div>
-    <script src="js/main.js"></script>
-    <script src="js/jquery.formstyler.min.js"></script>
+    <script src="/js/main.js"></script>     
+    <script src="/js/jquery.formstyler.min.js"></script>
+    
+   
 </body>
 
 </html>

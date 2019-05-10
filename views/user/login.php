@@ -1,11 +1,18 @@
 <div class="login-wrapper">
     <div class="main">
+        <div class="message">
+            <?php if (isset($errors) && is_array($errors)) : ?>
+                <?php foreach ($errors as $error) : ?>
+                    <p><?php echo $error; ?></p>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
         <div class="content">
             <div class="auth-logo">
-                <a href="" class="logo">Sign <span>In</span></a>
+                <div class="logo">Sign <span>In</span></div>
             </div>
             <div class="auth-section">
-                  <form action="" method="post">
+                <form action="" method="post">
                     <div class="inputs-wrapp">
                         <div class="input-item">
                             <input type="text" class="input" placeholder="Email" name="email">

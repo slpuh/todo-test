@@ -3,11 +3,11 @@
 
 @font-face {
 	font-family: 'fontello';
-	src: url('../fonts/fontello.eot');
-	src: url('../fonts/fontello.eot') format('embedded-opentype'),
-	url('../fonts/fontello.woff') format('woff'),
-	url('../fonts/fontello.ttf') format('truetype'),
-	url('../fonts/fontello.svg') format('svg');
+	src: url('/fonts/fontello.eot');
+	src: url('/fonts/fontello.eot') format('embedded-opentype'),
+	url('/fonts/fontello.woff') format('woff'),
+	url('/fonts/fontello.ttf') format('truetype'),
+	url('/fonts/fontello.svg') format('svg');
 	font-weight: normal;
 	font-style: normal;
   }
@@ -65,8 +65,11 @@ code,kbd,pre,samp
 }
 a
 {
+	color: inherit;
 	background-color: transparent;
 	webkit-text-decoration-skip: objects;
+	text-decoration: none;
+	
 }
 a:active,a:hover
 {
@@ -252,6 +255,10 @@ audio,canvas,iframe,img,svg,video
 {
 	content: '\e800';
 }
+.icon-edit:before
+{
+	content: '\e800';
+}
 .icon-cloud:before
 {
 	content: '\e801';
@@ -338,14 +345,23 @@ audio,canvas,iframe,img,svg,video
 	font-size: 24px;
 	margin-bottom: 36px;
 }
+.h3-main
+{
+	font-size: 20px;
+	margin-bottom: 36px;
+}
 @media screen and (max-width:767px)
 {
 	.h2-main
 	{
 		font-size: 20px;
 	}
+	.h3-main
+	{
+		font-size: 16px;
+	}
 }
-.h2-main i
+.h2-main i, .h3-main i
 {
 	color: #9b9b9b;
 }
@@ -545,6 +561,7 @@ audio,canvas,iframe,img,svg,video
 }
 .label
 {
+	color: #fff;
 	display: inline-block;
 	line-height: 20px;
 	margin-bottom: 8px;
@@ -1758,5 +1775,19 @@ body,html
 	height: 40px;
 	line-height: 40px;
 	width: 100%;
+}
+.task-action, .date-task
+{
+	text-align: right;
+}
+.card-task div 
+{
+	padding-bottom: 16px;
+}
+.block-item .card-subtask
+{
+	background: #c2c0c0;
+	padding: 15px;
+	margin-top: 15px;
 }
 

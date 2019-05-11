@@ -1,15 +1,15 @@
 <div class="login-wrapper">
     <div class="main">
-        <div class="message">
-            <?php if (isset($errors) && is_array($errors)) : ?>
-                <?php foreach ($errors as $error) : ?>
-                    <p><?php echo $error; ?></p>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
         <div class="content">
             <div class="auth-logo">
                 <div class="logo">Sign <span>In</span></div>
+                <div class="message">
+                    <?php if (isset($errors) && is_array($errors)) : ?>
+                        <?php foreach ($errors as $error) : ?>
+                            <p><?php echo $error; ?></p>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
             </div>
             <div class="auth-section">
                 <form action="" method="post">

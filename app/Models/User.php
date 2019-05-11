@@ -3,6 +3,7 @@
 namespace SendPulseTest\Models;
 
 use SendPulseTest\Components\Db;
+use PDO;
 
 class User
 {
@@ -16,9 +17,9 @@ class User
             . 'VALUES (:name, :email, :password)';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':name', $name, \PDO::PARAM_STR);
-        $result->bindParam(':email', $email, \PDO::PARAM_STR);
-        $result->bindParam(':password', $password, \PDO::PARAM_STR);
+        $result->bindParam(':name', $name, PDO::PARAM_STR);
+        $result->bindParam(':email', $email, PDO::PARAM_STR);
+        $result->bindParam(':password', $password, PDO::PARAM_STR);
 
         return $result->execute();
     }
@@ -57,7 +58,7 @@ class User
         $password = password_verify($password, $hash);
 
         if ($password) {
-            $result->bindParam(':email', $email, \PDO::PARAM_STR);
+            $result->bindParam(':email', $email, PDO::PARAM_STR);
 
             $result->execute();
 
@@ -125,7 +126,7 @@ class User
         $sql = 'SELECT COUNT(*) FROM users WHERE email = :email';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':email', $email, \PDO::PARAM_STR);
+        $result->bindParam(':email', $email, PDO::PARAM_STR);
         $result->execute();
 
         if ($result->fetchColumn())
@@ -141,7 +142,7 @@ class User
         $sql = 'SELECT COUNT(*) FROM users WHERE name = :name';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':name', $name, \PDO::PARAM_STR);
+        $result->bindParam(':name', $name, PDO::PARAM_STR);
         $result->execute();
 
         if ($result->fetchColumn())
@@ -157,9 +158,9 @@ class User
             $sql = 'SELECT * FROM users WHERE id = :id';
 
             $result = $db->prepare($sql);
-            $result->bindParam(':id', $id, \PDO::PARAM_INT);
+            $result->bindParam(':id', $id, PDO::PARAM_INT);
 
-            $result->setFetchMode(\PDO::FETCH_ASSOC);
+            $result->setFetchMode(PDO::FETCH_ASSOC);
             $result->execute();
 
             return $result->fetch();

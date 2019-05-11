@@ -4,7 +4,7 @@ namespace SendPulseTest\Components;
 
 class Router
 {
-    private $routes;
+    private $routes;   
 
     public function __construct()
     {
@@ -26,7 +26,7 @@ class Router
         
         foreach ($this->routes as $uriPattern => $path) {
             
-            if ($uriPattern == $uri) {
+            if (preg_match("~$uriPattern~", $uri)) {
                 
                 $internalRoute = preg_replace("~$uriPattern~", $path, $uri);                
                 
@@ -51,6 +51,7 @@ class Router
 		        {			
                     $controllerObj->$action();
                     $controllerObj->getView();
+                    break;                    
 		        }  
                                
             } 

@@ -21,31 +21,28 @@ class UserController extends BaseController
             $errors = [];
 
             if (!User::checkName($name)) {
-                $errors[] = 'Имя не должно быть короче 2-х символов';
+                $errors[] = 'Name must not be shorter than 2 characters';
             }
 
             if (!User::checkEmail($email)) {
-                $errors[] = 'Неправильный email';
+                $errors[] = 'Wrong email';
             }
 
             if (!User::checkPassword($password)) {
-                $errors[] = 'Пароль не должен быть короче 6-ти символов';
+                $errors[] = 'Password must not be shorter than 6 characters';
             } else {
                 $password = password_hash($password, PASSWORD_DEFAULT);
             }
 
             if (User::checkEmailExists($email) || User::checkNameExists($name)) {
-                $errors[] = 'Такой email или имя уже используются';
+                $errors[] = 'This email or name is already in use';
             }
 
-            if ($errors == false) {
-                $result = User::register($name, $email, $password); 
-                               
+            if ($errors == []) {
+                $result = User::register($name, $email, $password);
             }
-            $this->set(['result' => $result, 'errors' => $errors]);            
+            $this->set(['result' => $result, 'errors' => $errors]);
         }
-           
-         
     }
 
     public function login()
@@ -59,16 +56,16 @@ class UserController extends BaseController
             $errors = [];
 
             if (!User::checkEmail($email)) {
-                $errors[] = 'Неправильный email';
+                $errors[] = 'Wrong email';
             }
             if (!User::checkPassword($password)) {
-                $errors[] = 'Пароль не должен быть короче 6-ти символов';
+                $errors[] = 'Password must not be shorter than 6 characters';
             }
 
             $userId = User::checkUserData($email, $password);
 
             if ($userId == false) {
-                $errors[] = 'Неправильные данные для входа на сайт';
+                $errors[] = 'Incorrect login details';
             } else {
 
                 User::auth($userId);
@@ -76,7 +73,7 @@ class UserController extends BaseController
                 header("Location: /cabinet");
             }
             if ($errors) {
-                $this->set(['errors' => $errors]);  
+                $this->set(['errors' => $errors]);
             }
         }
     }

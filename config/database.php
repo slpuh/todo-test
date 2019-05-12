@@ -2,7 +2,7 @@
 
 return [
     'host' => 'localhost',
-    'dbname' => 'todo',
-    'user' => 'root',
-    'password' => 'z$ESXjuJ71nA',            
+    'dbname' => 'host1756107_todo',
+    'user' => 'host1756107',
+    'password' => '53afa81a',            
 ];

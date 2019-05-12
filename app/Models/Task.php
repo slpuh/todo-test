@@ -253,11 +253,7 @@ class Task
                 $result = $db->prepare($sql);
                 $result->bindParam(':status', $status, PDO::PARAM_INT);
                 $result->bindParam(':taskId', $parentId['parent_id'], PDO::PARAM_INT);
-                $result->execute();
-           
-        
-
-        
+                $result->execute();        
      }
     }
 }

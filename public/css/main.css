@@ -731,7 +731,7 @@ audio,canvas,iframe,img,svg,video
 }
 .table .status.status-warning
 {
-	color: #ffa716;
+	color: #be112e;
 }
 .table .status.status-error
 {
@@ -1503,7 +1503,7 @@ body,html
 }
 .details-section .status.status-warning
 {
-	color: #ffa716;
+	color: #be112e;
 }
 .details-section .status.status-error
 {
@@ -1668,7 +1668,7 @@ body,html
 }
 .block-item .status.status-warning
 {
-	color: #ffa716;
+	color: #be112e;
 }
 .block-item .status.status-error
 {
@@ -1680,7 +1680,7 @@ body,html
 }
 .block-item .status.status-process
 {
-	color: #4a90e2;
+	color: #0e3a99;
 }
 .login-wrapper
 {
@@ -1789,5 +1789,9 @@ body,html
 	background: #c2c0c0;
 	padding: 15px;
 	margin-top: 15px;
+}
+.block-item div.status-warning
+{
+	text-decoration: line-through;
 }
 

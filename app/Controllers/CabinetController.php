@@ -137,9 +137,16 @@ class CabinetController extends BaseController
                 $errors[] = 'Tasks can only be installed in the future';
             }
 
-            if (!Task::checkSubFinishDate($finish, 59)) {
-                $errors[] = 'The subtask can not be later than the task';
-            }
+            if ($task['parent_id'] != 0) {
+                $parentId = $task['parent_id'];
+                if (!Task::checkSubFinishDate($finish, $parentId)) {
+                    $errors[] = 'The subtask can not be later than the task';
+                }                 
+            } else {
+                if (!Task::checkParentTaskFinishDate($finish, $taskId)) {
+                    $errors[] = 'Task cannot be completed before subtask';
+                }
+            }            
 
             if (empty($errors)) {
                 Task::editTask($taskId, $title, $text, $finish);
@@ -150,6 +157,14 @@ class CabinetController extends BaseController
             'task' => $task,
             'errors' => $errors
         ]);
+    }
+
+    public function closeTask()
+    {
+        $taskId = Task::getTaskId();
+        
+        Task::closeTask($taskId);
+        header("Location: /cabinet");
     }
 
     public function deleteTask()

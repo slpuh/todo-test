@@ -21,15 +21,19 @@ class UserController extends BaseController
             $errors = [];
 
             if (!User::checkName($name)) {
-                $errors[] = 'Name must not be shorter than 2 characters';
+                $errors[] = 'Name must not be less than 4 characters and not more than 20';
             }
 
             if (!User::checkEmail($email)) {
                 $errors[] = 'Wrong email';
             }
 
+            if (!User::checkEmailLen($email)) {
+                $errors[] = 'Email should not be more than 30 characters';
+            }
+
             if (!User::checkPassword($password)) {
-                $errors[] = 'Password must not be shorter than 6 characters';
+                $errors[] = 'Password must not be less than 6 characters and not more than 20';
             } else {
                 $password = password_hash($password, PASSWORD_DEFAULT);
             }
@@ -59,8 +63,8 @@ class UserController extends BaseController
                 $errors[] = 'Wrong email';
             }
             if (!User::checkPassword($password)) {
-                $errors[] = 'Password must not be shorter than 6 characters';
-            }
+                $errors[] = 'Password must not be less than 6 characters and not more than 20';
+            }            
 
             $userId = User::checkUserData($email, $password);
 

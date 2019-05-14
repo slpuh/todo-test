@@ -36,11 +36,11 @@ class CabinetController extends BaseController
             $errors = [];
 
             if (!Task::checkTitle($title)) {
-                $errors[] = 'Title field cannot be empty';
+                $errors[] = 'Title field must contain at least 4 characters and maximum 50';
             }
 
             if (!Task::checkTask($text)) {
-                $errors[] = 'Task field must contain at least 10 characters';
+                $errors[] = 'Task field must contain at least 10 characters and maximum 300';
             }
 
             if (!Task::checkFinishDate($finish)) {
@@ -77,11 +77,11 @@ class CabinetController extends BaseController
 
 
             if (!Task::checkTitle($title)) {
-                $errors[] = 'Title field cannot be empty';
+                $errors[] = 'Title field must contain at least 4 characters and maximum 20';
             }
 
             if (!Task::checkTask($text)) {
-                $errors[] = 'Task field must contain at least 10 characters';
+                $errors[] = 'Task field must contain at least 10 characters and maximum 300';
             }
 
             if (!Task::checkFinishDate($finish)) {
@@ -122,11 +122,11 @@ class CabinetController extends BaseController
             $finish = $_POST['finish'];
 
             if (!Task::checkTitle($title)) {
-                $errors[] = 'Title field cannot be empty';
+                $errors[] = 'Title field must contain at least 4 characters and maximum 20';
             }
 
             if (!Task::checkTask($text)) {
-                $errors[] = 'Task field must contain at least 10 characters';
+                $errors[] = 'Task field must contain at least 10 characters and maximum 300';
             }
 
             if (!Task::checkFinishDate($finish)) {
@@ -142,7 +142,7 @@ class CabinetController extends BaseController
                 if (!Task::checkSubFinishDate($finish, $parentId)) {
                     $errors[] = 'The subtask can not be later than the task';
                 }                 
-            } else {
+            
                 if (!Task::checkParentTaskFinishDate($finish, $taskId)) {
                     $errors[] = 'Task cannot be completed before subtask';
                 }

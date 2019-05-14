@@ -7,7 +7,7 @@ use PDO;
 
 class User
 {
-
+    //Регистрация пользователя
     public static function register($name, $email, $password)
     {
 
@@ -24,7 +24,7 @@ class User
         return $result->execute();
     }
 
-    
+    //Валидация пароля при залогинивании
     public static function validatePassword($email)
     {
         $db = Db::getConnection();
@@ -45,6 +45,7 @@ class User
         }
     }
 
+    //Проверка данных пользователя при залогинивании
     public static function checkUserData($email, $password)
     {
         $db = Db::getConnection();
@@ -71,45 +72,50 @@ class User
         return false;
     }
 
+    //Сессия
     public static function auth($userId)
     {
         $_SESSION['user'] = $userId;
     }
 
+    //Проверка авторизирован ли пользователь
     public static function checkLogged()
     {
-
         if (isset($_SESSION['user'])) {
             return $_SESSION['user'];
         }
 
         header("Location: /user/login");
     }
-
-    public static function isGuest()
+    
+    //Проверка длины логина при регистрации
+    public static function checkName($name)
     {
-        if (isset($_SESSION['user'])) {
+        if (strlen($name) <= 4  || strlen($name) >= 20) {
+            return false;
+        }
+        return true;
+    }    
+
+    //Проверка длины пароля при авторизации/регистрации
+    public static function checkPassword($password)
+    {
+        if (strlen($password) <= 6 || strlen($password) >= 20) {
             return false;
         }
         return true;
     }
 
-    public static function checkName($name)
+    //Проверка длины email при авторизации/регистрации
+    public static function checkEmailLen($email)
     {
-        if (strlen($name) >= 2) {
+        if (strlen($email) <= 30) {
             return true;
         }
         return false;
     }
 
-    public static function checkPassword($password)
-    {
-        if (strlen($password) >= 6) {
-            return true;
-        }
-        return false;
-    }
-
+    //Проверка валидности email при авторизации/регистрации
     public static function checkEmail($email)
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -118,6 +124,7 @@ class User
         return false;
     }
 
+    //Проверка есть ли email при авторизации/регистрации
     public static function checkEmailExists($email)
     {
 
@@ -134,6 +141,7 @@ class User
         return false;
     }
 
+    //Проверка есть ли логин при авторизации
     public static function checkNameExists($name)
     {
 
@@ -150,6 +158,7 @@ class User
         return false;
     }
 
+    //Получение id пользователя
     public static function getUserById($id)
     {
         if ($id) {

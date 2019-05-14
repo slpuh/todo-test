@@ -132,19 +132,19 @@ class Task
     //Проеверка заголовка на длину
     public static function checkTitle($title)
     {
-        if (strlen($title) >= 4) {
-            return true;
+        if (strlen($title) <= 4 || strlen($title) >= 50) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     //Проверка задачи на длину
     public static function checkTask($text)
     {
-        if (strlen($text) >= 10) {
-            return true;
+        if (strlen($text) <= 10 || strlen($text) >= 300) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     //Проверка заполнения поля дата
@@ -195,6 +195,7 @@ class Task
         $result->execute();
         $subTasks = $result->fetchAll();
 
+        if (!empty($subTasks)) {
         foreach ($subTasks as $subTask) {
             $subTaskFinish = $subTask['finish'];
             if (strtotime($subTaskFinish) <= strtotime($finish)) {
@@ -202,6 +203,7 @@ class Task
             }
             return false;
         }
+    }
     }
     //Получение Id родителя
     public static function getParentId($taskId)

@@ -141,12 +141,13 @@ class CabinetController extends BaseController
                 $parentId = $task['parent_id'];
                 if (!Task::checkSubFinishDate($finish, $parentId)) {
                     $errors[] = 'The subtask can not be later than the task';
-                }                 
-            
+                }
+            } else {
                 if (!Task::checkParentTaskFinishDate($finish, $taskId)) {
                     $errors[] = 'Task cannot be completed before subtask';
                 }
-            }            
+            }
+
 
             if (empty($errors)) {
                 Task::editTask($taskId, $title, $text, $finish);
@@ -162,7 +163,7 @@ class CabinetController extends BaseController
     public function closeTask()
     {
         $taskId = Task::getTaskId();
-        
+
         Task::closeTask($taskId);
         header("Location: /cabinet");
     }
